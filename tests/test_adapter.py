@@ -15,6 +15,23 @@ import adapter  # noqa: E402
 from gateway.config import PlatformConfig  # noqa: E402
 
 
+def ensure_max_platform_registered():
+    # Hermes creates dynamic Platform('max') only after the plugin registers its
+    # platform entry. The real gateway does this before adapter construction;
+    # tests mirror that lifecycle explicitly.
+    from gateway.platform_registry import PlatformEntry, platform_registry
+
+    if not platform_registry.is_registered("max"):
+        platform_registry.register(
+            PlatformEntry(
+                name="max",
+                label="Max",
+                adapter_factory=lambda cfg: adapter.MaxAdapter(cfg),
+                check_fn=lambda: True,
+            )
+        )
+
+
 def test_verify_secret_matches_raw_header_not_hmac():
     assert adapter._verify_secret(b'{"x":1}', "secret-123", "secret-123") is True
     assert adapter._verify_secret(b'{"x":1}', "secret-123", "different") is False
@@ -39,6 +56,7 @@ def test_env_enablement_seeds_extra(monkeypatch):
 
 @pytest.mark.asyncio
 async def test_build_message_created_event_dm():
+    ensure_max_platform_registered()
     cfg = PlatformConfig(enabled=True, extra={"token": "tok"})
     max_adapter = adapter.MaxAdapter(cfg)
 
@@ -60,6 +78,7 @@ async def test_build_message_created_event_dm():
 
 @pytest.mark.asyncio
 async def test_build_message_created_event_group():
+    ensure_max_platform_registered()
     cfg = PlatformConfig(enabled=True, extra={"token": "tok"})
     max_adapter = adapter.MaxAdapter(cfg)
 
