@@ -24,4 +24,4 @@ jobs:
       - name: Run tests
         env:
           HERMES_AGENT_SRC: ${{ github.workspace }}/hermes-agent
-        run: pytest -q
+        run: pytest -q tests
