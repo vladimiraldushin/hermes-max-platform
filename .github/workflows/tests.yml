@@ -1,0 +1,26 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: NousResearch/hermes-agent
+          path: hermes-agent
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pytest pytest-asyncio aiohttp httpx pyyaml rich
+      - name: Run tests
+        env:
+          HERMES_AGENT_SRC: ${{ github.workspace }}/hermes-agent
+        run: pytest -q

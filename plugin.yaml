@@ -1,0 +1,46 @@
+name: max-platform
+label: Max
+kind: platform
+version: 0.1.0
+description: >
+  Max messenger gateway adapter for Hermes Agent. Adds Max as a messaging
+  platform so users can talk to Hermes through a Max chatbot using the official
+  Max Bot API webhook and REST endpoints.
+author: Vladimir Aldushin / Hermes Agent community
+license: MIT
+homepage: https://github.com/vladimiraldushin/hermes-max-platform
+requires_env:
+  - name: MAX_BOT_TOKEN
+    description: "Bot token from MAX for Partners: Chat-bots → Go → Advanced settings → Configure → Token"
+    prompt: "Max bot token"
+    url: "https://dev.max.ru/docs/chatbots/bots-create#%D0%A7%D1%82%D0%BE%20%D0%B4%D0%B0%D0%BB%D1%8C%D1%88%D0%B5"
+    password: true
+optional_env:
+  - name: MAX_WEBHOOK_SECRET
+    description: "Optional POST /subscriptions secret; Max sends it in X-Max-Bot-Api-Secret"
+    prompt: "Webhook secret"
+    password: true
+  - name: MAX_WEBHOOK_HOST
+    description: "Local bind host for the webhook server, usually 0.0.0.0"
+    prompt: "Webhook host"
+    password: false
+  - name: MAX_WEBHOOK_PORT
+    description: "Local bind port for the webhook server, default 8646"
+    prompt: "Webhook port"
+    password: false
+  - name: MAX_WEBHOOK_PATH
+    description: "Webhook path, default /max/webhook"
+    prompt: "Webhook path"
+    password: false
+  - name: MAX_ALLOWED_USERS
+    description: "Comma-separated Max user IDs allowed to talk to Hermes"
+    prompt: "Allowed user IDs"
+    password: false
+  - name: MAX_ALLOW_ALL_USERS
+    description: "Set true to allow any Max user who can message the bot"
+    prompt: "Allow all users"
+    password: false
+  - name: MAX_HOME_CHANNEL
+    description: "Default Max delivery target for cron/send_message, e.g. user:123 or chat:456"
+    prompt: "Home channel"
+    password: false

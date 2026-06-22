@@ -1,0 +1,16 @@
+# Optional Hermes config.yaml example.
+# Secrets are better kept in ~/.hermes/.env; this shows the equivalent shape.
+
+gateway:
+  platforms:
+    max:
+      enabled: true
+      extra:
+        host: "0.0.0.0"
+        port: 8646
+        path: "/max/webhook"
+        # Prefer MAX_BOT_TOKEN in .env rather than committing token here.
+        # token: "..."
+        # webhook_secret: "CHANGE_ME_5_256_CHARS"
+        max_message_length: 4000
+        allowed_users: []
